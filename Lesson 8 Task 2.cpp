@@ -51,6 +51,15 @@ public:
 		this->corner_A = A;
 		this->corner_B = B;
 		this->corner_C = C;
+
+		try {
+			if (!(check()));
+		}
+		catch (std::exception ex) //ловим все исключения - наследники от std::exception
+		{
+			std::cout << "Catch exception. Message:" << ex.what();
+			
+		}
 	}
 
 	int get_number_of_sides() { return number_of_sides; }
@@ -97,6 +106,15 @@ public:
 		this->corner_A = A;
 		this->corner_B = B;
 		this->corner_C = С;
+
+		try {
+			if (!(check()));
+		}
+		catch (std::exception ex) //ловим все исключения - наследники от std::exception
+		{
+			std::cout << "Catch exception. Message:" << ex.what();
+
+		}
 	}
 
 	bool check() override {
@@ -123,6 +141,15 @@ public:
 		this->corner_A = A;
 		this->corner_C = C;
 		this->corner_B = B;
+
+		try {
+			if (!(check()));
+		}
+		catch (std::exception ex) //ловим все исключения - наследники от std::exception
+		{
+			std::cout << "Catch exception. Message:" << ex.what();
+
+		}
 	}
 
 	bool check() override {
@@ -149,6 +176,15 @@ public:
 		this->corner_A = A;
 		this->corner_B = B;
 		this->corner_C = C;
+
+		try {
+			if (!(check()));
+		}
+		catch (std::exception ex) //ловим все исключения - наследники от std::exception
+		{
+			std::cout << "Catch exception. Message:" << ex.what();
+
+		}
 	}
 
 	bool check() override {
@@ -190,6 +226,15 @@ public:
 		this->corner_B = B;
 		this->corner_C = C;
 		this->corner_D = D;
+
+		try {
+			if (!(check()));
+		}
+		catch (std::exception ex) //ловим все исключения - наследники от std::exception
+		{
+			std::cout << "Catch exception. Message:" << ex.what();
+
+		}
 	}
 
 	int get_number_of_sides() { return number_of_sides; }
@@ -238,6 +283,15 @@ public:
 		this->corner_B = B;
 		this->corner_C = C;
 		this->corner_D = D;
+
+		try {
+			if (!(check()));
+		}
+		catch (std::exception ex) //ловим все исключения - наследники от std::exception
+		{
+			std::cout << "Catch exception. Message:" << ex.what();
+
+		}
 	}
 
 	bool check() override {
@@ -264,6 +318,15 @@ public:
 		this->corner_B = B;
 		this->corner_C = C;
 		this->corner_D = D;
+
+		try {
+			if (!(check()));
+		}
+		catch (std::exception ex) //ловим все исключения - наследники от std::exception
+		{
+			std::cout << "Catch exception. Message:" << ex.what();
+
+		}
 	}
 
 	bool check() override {
@@ -288,6 +351,15 @@ public:
 		this->side_b = this->side_d = d;
 		this->corner_A = this->corner_C = C;
 		this->corner_B = this->corner_D = D;
+
+		try {
+			if (!(check()));
+		}
+		catch (std::exception ex) //ловим все исключения - наследники от std::exception
+		{
+			std::cout << "Catch exception. Message:" << ex.what();
+
+		}
 	}
 
 	bool check() override {
@@ -316,6 +388,15 @@ public:
 		this->corner_B = B;
 		this->corner_C = C;
 		this->corner_D = D;
+
+		try {
+			if (!(check()));
+		}
+		catch (std::exception ex) //ловим все исключения - наследники от std::exception
+		{
+			std::cout << "Catch exception. Message:" << ex.what();
+
+		}
 	}
 
 	bool check() override {
@@ -336,7 +417,6 @@ void print_info(Figure* f) { f->print_myself(); }
 int main() {
 	setlocale(LC_ALL, "Russian");
 
-	try {
 		Figure fig; // объект класса Фигура
 		print_info(&fig);
 
@@ -366,12 +446,6 @@ int main() {
 
 		Rhomb rhomb(15, 30, 60, 85, 36, 125, 77, 95); // объект класса Ромб
 		print_info(&rhomb);
-	}
-	catch (std::exception ex) //ловим все исключения - наследники от std::exception
-	{
-		std::cout << "Catch exception. Message:" << ex.what();
-		return 0;
-	}
 }
 
 
