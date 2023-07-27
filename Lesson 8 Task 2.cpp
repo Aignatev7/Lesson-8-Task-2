@@ -53,7 +53,7 @@ public:
 		this->corner_C = C;
 
 		if (!(check()))
-			throw std::exception();
+			throw std::runtime_error("bad_data");
 	}
 
 	int get_number_of_sides() { return number_of_sides; }
@@ -102,7 +102,7 @@ public:
 		this->corner_C = Ñ;
 
 		if (!(check()))
-			throw std::exception();
+			throw std::runtime_error("bad_data");
 	}
 
 	bool check() override {
@@ -131,7 +131,7 @@ public:
 		this->corner_B = B;
 
 		if (!(check()))
-			throw std::exception();
+			throw std::runtime_error("bad_data");
 	}
 
 	bool check() override {
@@ -160,7 +160,7 @@ public:
 		this->corner_C = C;
 
 		if (!(check()))
-			throw std::exception();
+			throw std::runtime_error("bad_data");
 	}
 
 	bool check() override {
@@ -204,7 +204,7 @@ public:
 		this->corner_D = D;
 
 		if (!(check()))
-			throw std::exception();
+			throw std::runtime_error("bad_data");
 	}
 
 	int get_number_of_sides() { return number_of_sides; }
@@ -255,7 +255,7 @@ public:
 		this->corner_D = D;
 
 		if (!(check()))
-			throw std::exception();
+			throw std::runtime_error("bad_data");
 	}
 
 	bool check() override {
@@ -284,7 +284,7 @@ public:
 		this->corner_D = D;
 
 		if (!(check()))
-			throw std::exception();
+			throw std::runtime_error("bad_data");
 	}
 
 	bool check() override {
@@ -339,7 +339,7 @@ public:
 		this->corner_D = D;
 
 		if (!(check()))
-			throw std::exception();
+			throw std::runtime_error("bad_data");
 	}
 
 	bool check() override {
