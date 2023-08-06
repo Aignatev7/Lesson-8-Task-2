@@ -1,8 +1,11 @@
 #include <iostream>
 
-class Exception : public std::domain_error { public: using domain_error::domain_error; };
+class Exception : public std::domain_error {
+public:
+	using domain_error::domain_error;
+};
 
-class Figure  // класс Фигура
+class Figure // класс Фигура
 {
 protected:
 	std::string figure_name;
@@ -16,14 +19,7 @@ public:
 	std::string get_figure_name() { return figure_name; }
 	int get_number_of_sides() { return number_of_sides; }
 
-	virtual bool check() {
-		if (number_of_sides == 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+	virtual void check() {}
 
 	virtual void print_myself() {}
 };
@@ -51,9 +47,6 @@ public:
 		this->corner_A = A;
 		this->corner_B = B;
 		this->corner_C = C;
-
-		if (!(check()))
-			throw std::runtime_error("bad_data");
 	}
 
 	int get_number_of_sides() { return number_of_sides; }
@@ -64,27 +57,21 @@ public:
 	int get_corner_B() { return corner_B; }
 	int get_corner_C() { return corner_C; }
 
-	bool check() override {
-		if ((number_of_sides == 3) && ((corner_A + corner_B + corner_C) == 180)) {
-			return true;
+	void check() override {
+		Figure::check();
+		if (number_of_sides != 3) {
+			throw std::runtime_error("Количество сторон не равно 3!");
 		}
-		else {
-			return false;
+		if ((corner_A + corner_B + corner_C) != 180) {
+			throw std::runtime_error("Сумма углов не равна 180!");
 		}
 	}
 
 	void print_myself() override {
-		if (check()) {
-			std::cout << get_figure_name() << " (стороны " << get_side_a() << ", "
-				<< get_side_b() << ", " << get_side_c() << "; углы "
-				<< get_corner_A() << ", " << get_corner_B() << ", "
-				<< get_corner_C() << ") создан\n" << std::endl;
-		}
-		else if ((corner_A + corner_B + corner_C) != 180) {
-			std::cout << get_figure_name()
-				<< ": Ошибка создания фигуры. Причина: сумма углов не равна 180"
-				<< "\n" << std::endl;
-		}
+		std::cout << get_figure_name() << " (стороны " << get_side_a() << ", "
+			<< get_side_b() << ", " << get_side_c() << "; углы "
+			<< get_corner_A() << ", " << get_corner_B() << ", "
+			<< get_corner_C() << ") создан\n" << std::endl;
 	}
 };
 
@@ -93,27 +80,18 @@ class RightTriangle : public Triangle // класс Прямоугольный треугольник
 public:
 	RightTriangle(int a, int b, int c, int A, int B, int С) {
 		figure_name = "Прямоугольный треугольник";
-
 		this->side_a = a;
 		this->side_b = b;
 		this->side_c = c;
 		this->corner_A = A;
 		this->corner_B = B;
 		this->corner_C = С;
-
-		if (!(check()))
-			throw std::runtime_error("bad_data");
 	}
 
-	bool check() override {
-		if (!Triangle::check()) {
-			return false;
-		}
-		else if (corner_C == 90) {
-			return true;
-		}
-		else {
-			return false;
+	void check() override {
+		Triangle::check();
+		if (corner_C != 90) {
+			throw std::runtime_error("Угол не равен 90 градусам!");
 		}
 	}
 };
@@ -129,20 +107,15 @@ public:
 		this->corner_A = A;
 		this->corner_C = C;
 		this->corner_B = B;
-
-		if (!(check()))
-			throw std::runtime_error("bad_data");
 	}
 
-	bool check() override {
-		if (!Triangle::check()) {
-			return false;
+	void check() override {
+		Triangle::check();
+		if (side_a != side_c) {
+			throw std::runtime_error("Cтороны a и c не равны!");
 		}
-		if ((side_a == side_c) && (corner_A == corner_C)) {
-			return true;
-		}
-		else {
-			return false;
+		if (corner_A != corner_C) {
+			throw std::runtime_error("Углы A и C не равны!");
 		}
 	}
 };
@@ -158,20 +131,15 @@ public:
 		this->corner_A = A;
 		this->corner_B = B;
 		this->corner_C = C;
-
-		if (!(check()))
-			throw std::runtime_error("bad_data");
 	}
 
-	bool check() override {
-		if (!Triangle::check()) {
-			return false;
+	void check() override {
+		Triangle::check();
+		if (side_a != side_b != side_c) {
+			throw std::runtime_error("Не все стороны равны!");
 		}
-		else if ((side_a == side_b == side_c) && (corner_A = corner_B = corner_C == 60)) {
-			return true;
-		}
-		else {
-			return false;
+		if ((corner_A = corner_B = corner_C) != 60) {
+			throw std::runtime_error("Не все углы равны 60!");
 		}
 	}
 };
@@ -202,9 +170,6 @@ public:
 		this->corner_B = B;
 		this->corner_C = C;
 		this->corner_D = D;
-
-		if (!(check()))
-			throw std::runtime_error("bad_data");
 	}
 
 	int get_number_of_sides() { return number_of_sides; }
@@ -217,26 +182,21 @@ public:
 	int get_corner_C() { return corner_C; }
 	int get_corner_D() { return corner_D; }
 
-	bool check() override {
-		if ((number_of_sides == 4) && ((corner_A + corner_B + corner_C + corner_D) == 360)) {
-			return true;
+	void check() override {
+		Figure::check();
+		if (number_of_sides != 4) {
+			throw std::runtime_error("Количество сторон не равно 4!");
 		}
-		else {
-			return false;
+		if ((corner_A + corner_B + corner_C + corner_D) != 360) {
+			throw std::runtime_error("Сумма углов не равна 360!");
 		}
 	}
 
 	void print_myself() override {
-		if (check()) {
-			std::cout << get_figure_name() << " (стороны " << get_side_a() << ", "
-				<< get_side_b() << ", " << get_side_c() << ", " << get_side_d()
-				<< "; углы " << get_corner_A() << ", " << get_corner_B() << ", "
-				<< get_corner_C() << ", " << get_corner_D() << ") создан\n" << std::endl;
-		}
-		else if ((corner_A + corner_B + corner_C + corner_D) != 360) {
-			std::cout << get_figure_name()
-				<< ": Ошибка создания фигуры. Причина: сумма углов не равна 360" << "\n" << std::endl;
-		}
+		std::cout << get_figure_name() << " (стороны " << get_side_a() << ", "
+			<< get_side_b() << ", " << get_side_c() << ", " << get_side_d()
+			<< "; углы " << get_corner_A() << ", " << get_corner_B() << ", "
+			<< get_corner_C() << ", " << get_corner_D() << ") создан\n" << std::endl;
 	}
 };
 
@@ -245,29 +205,25 @@ class Rectangle : public Quadrangle // класс Прямоугольник
 public:
 	Rectangle() {}
 
-	Rectangle(int c, int d, int A, int B, int C, int D) {
+	Rectangle(int a, int b, int c, int d, int A, int B, int C, int D) {
 		figure_name = "Прямоугольник";
-		this->side_a = this->side_c = c;
-		this->side_b = this->side_d = d;
+		this->side_a = a;
+		this->side_c = c;
+		this->side_b = b;
+		this->side_d = d;
 		this->corner_A = A;
 		this->corner_B = B;
 		this->corner_C = C;
 		this->corner_D = D;
-
-		if (!(check()))
-			throw std::runtime_error("bad_data");
 	}
 
-	bool check() override {
-		if (!Quadrangle::check()) {
-			return false;
+	void check() override {
+		Quadrangle::check();
+		if ((side_a != side_c) || (side_b != side_d)) {
+			throw std::runtime_error("Стороны не равны попарно!");
 		}
-		if (((side_a == side_c) && (side_b == side_d)) &&
-			((corner_A = corner_B = corner_C = corner_D) == 90)) {
-			return true;
-		}
-		else {
-			return false;
+		if ((corner_A = corner_B = corner_C = corner_D) != 90) {
+			throw std::runtime_error("Не все углы равны 90!");
 		}
 	}
 };
@@ -275,27 +231,25 @@ public:
 class Square : public Rectangle // класс Квадрат
 {
 public:
-	Square(int d, int A, int B, int C, int D) {
+	Square(int a, int b, int c, int d, int A, int B, int C, int D) {
 		figure_name = "Квадрат";
-		this->side_a = this->side_b = this->side_c = this->side_d = d;
+		this->side_a = a;
+		this->side_c = c;
+		this->side_b = b;
+		this->side_d = d;
 		this->corner_A = A;
 		this->corner_B = B;
 		this->corner_C = C;
 		this->corner_D = D;
-
-		if (!(check()))
-			throw std::runtime_error("bad_data");
 	}
 
-	bool check() override {
-		if (!Rectangle::check()) {
-			return false;
+	void check() override {
+		Quadrangle::check();
+		if (side_a != side_b != side_c != side_d) {
+			throw std::runtime_error("Не все стороны равны!");
 		}
-		if ((side_a == side_b == side_c == side_d) && ((corner_A = corner_B = corner_C = corner_D) == 90)) {
-			return true;
-		}
-		else {
-			return false;
+		if ((corner_A = corner_B = corner_C = corner_D) != 90) {
+			throw std::runtime_error("Не все углы равны 90!");
 		}
 	}
 };
@@ -303,23 +257,25 @@ public:
 class Parallelogram : public Quadrangle // класс Параллелограмм
 {
 public:
-	Parallelogram(int c, int d, int C, int D) {
+	Parallelogram(int a, int b, int c, int d, int A, int B, int C, int D) {
 		figure_name = "Параллелограмм";
-		this->side_a = this->side_c = c;
-		this->side_b = this->side_d = d;
-		this->corner_A = this->corner_C = C;
-		this->corner_B = this->corner_D = D;
+		this->side_a = a;
+		this->side_c = c;
+		this->side_b = b;
+		this->side_d = d;
+		this->corner_A = A;
+		this->corner_B = B;
+		this->corner_C = C;
+		this->corner_D = D;
 	}
 
-	bool check() override {
-		if (!Quadrangle::check()) {
-			return false;
+	void check() override {
+		Quadrangle::check();
+		if ((side_a != side_c) || (side_b != side_d)) {
+			throw std::runtime_error("Стороны не равны попарно!");
 		}
-		if (((side_a == side_c) && (side_b == side_d)) && ((corner_A == corner_C) && (corner_B == corner_D))) {
-			return true;
-		}
-		else {
-			return false;
+		if ((corner_A == corner_C) || (corner_B == corner_D)) {
+			throw std::runtime_error("Углы попарно не равны!");
 		}
 	}
 };
@@ -337,20 +293,15 @@ public:
 		this->corner_B = B;
 		this->corner_C = C;
 		this->corner_D = D;
-
-		if (!(check()))
-			throw std::runtime_error("bad_data");
 	}
 
-	bool check() override {
-		if (!Quadrangle::check()) {
-			return false;
+	void check() override {
+		Quadrangle::check();
+		if (side_a != side_b != side_c != side_d) {
+			throw std::runtime_error("Не все стороны равны!");
 		}
-		if ((side_a == side_b == side_c == side_d) && ((corner_A == corner_C) && (corner_B == corner_D))) {
-			return true;
-		}
-		else {
-			return false;
+		if ((corner_A == corner_C) || (corner_B == corner_D)) {
+			throw std::runtime_error("Углы попарно не равны!");
 		}
 	}
 };
@@ -362,7 +313,6 @@ int main() {
 
 	try {
 		Figure fig; // объект класса Фигура
-		print_info(&fig);
 
 		Triangle tri(20, 30, 40, 55, 65, 60); // объект класса Треугольник
 		print_info(&tri);
@@ -376,25 +326,26 @@ int main() {
 		EquilateralTriangle eq_tri(32, 44, 52, 62, 43, 68); // объект класса Равносторонний треугольник
 		print_info(&eq_tri);
 
-		Quadrangle quad(12, 45, 89, 23, 65, 115, 110, 70); // объект класса Четырёхугольник
+		Quadrangle quad(12, 45, 89, 23, 65, 115, 110, 70); // объект класса Четырёхугольник 
 		print_info(&quad);
 
-		Rectangle rect(79, 45, 90, 90, 90, 90); // объект класса Прямоугольник
+		Rectangle rect(23, 57, 79, 45, 90, 90, 90, 90); // объект класса Прямоугольник
 		print_info(&rect);
 
-		Square square(45, 65, 85, 45, 75); // объект класса Квадрат
+		Square square(45, 18, 76, 35, 65, 85, 45, 75); // объект класса Квадрат
 		print_info(&square);
 
-		Parallelogram paral(45, 15, 84, 31); // объект класса Параллелограмм
+		Parallelogram paral(85, 52, 64, 38, 45, 15, 84, 31); // объект класса Параллелограмм
 		print_info(&paral);
 
 		Rhomb rhomb(15, 30, 60, 85, 36, 125, 77, 95); // объект класса Ромб
 		print_info(&rhomb);
 
 	}
-	catch (std::exception ex) //ловим все исключения - наследники от std::exception
+	catch (
+		std::exception ex) //ловим все исключения - наследники от std::exception
 	{
-		std::cout << "Catch exception. Message:" << ex.what();
+		std::cout << "Ошибка создания фигуры. Причина: " << ex.what();
 	}
 }
 
