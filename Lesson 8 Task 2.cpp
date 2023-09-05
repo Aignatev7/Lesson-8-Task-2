@@ -15,8 +15,10 @@ public:
 	Figure() {
 		figure_name = "Фигура";
 		number_of_sides = 0;
-		void check() {}
 	}
+
+	virtual void check() {}
+
 	std::string get_figure_name() { return figure_name; }
 	int get_number_of_sides() { return number_of_sides; }
 
@@ -46,14 +48,15 @@ public:
 		this->corner_A = A;
 		this->corner_B = B;
 		this->corner_C = C;
-		void check() {
-			Figure::check();
-			if (number_of_sides != 3) {
-				throw std::runtime_error("Количество сторон не равно 3!");
-			}
-			if ((corner_A + corner_B + corner_C) != 180) {
-				throw std::runtime_error("Сумма углов не равна 180!");
-			}
+	}
+
+	void check() override {
+		Figure::check();
+		if (number_of_sides != 3) {
+			throw std::runtime_error("Количество сторон не равно 3!");
+		}
+		if ((corner_A + corner_B + corner_C) != 180) {
+			throw std::runtime_error("Сумма углов не равна 180!");
 		}
 	}
 
@@ -84,11 +87,12 @@ public:
 		this->corner_A = A;
 		this->corner_B = B;
 		this->corner_C = С;
-		void check() {
-			Triangle::check();
-			if (corner_C != 90) {
-				throw std::runtime_error("Угол не равен 90 градусам!");
-			}
+	}
+
+	void check() override {
+		Triangle::check();
+		if (corner_C != 90) {
+			throw std::runtime_error("Угол не равен 90 градусам!");
 		}
 	}
 };
@@ -104,15 +108,15 @@ public:
 		this->corner_A = A;
 		this->corner_C = C;
 		this->corner_B = B;
+	}
 
-		void check() override {
-			Triangle::check();
-			if (side_a != side_c) {
-				throw std::runtime_error("Cтороны a и c не равны!");
-			}
-			if (corner_A != corner_C) {
-				throw std::runtime_error("Углы A и C не равны!");
-			}
+	void check() override {
+		Triangle::check();
+		if (side_a != side_c) {
+			throw std::runtime_error("Cтороны a и c не равны!");
+		}
+		if (corner_A != corner_C) {
+			throw std::runtime_error("Углы A и C не равны!");
 		}
 	}
 };
@@ -212,14 +216,15 @@ public:
 		this->corner_B = B;
 		this->corner_C = C;
 		this->corner_D = D;
-		void check() override {
-			Quadrangle::check();
-			if ((side_a != side_c) || (side_b != side_d)) {
-				throw std::runtime_error("Стороны не равны попарно!");
-			}
-			if ((corner_A = corner_B = corner_C = corner_D) != 90) {
-				throw std::runtime_error("Не все углы равны 90!");
-			}
+	}
+
+	void check() override {
+		Quadrangle::check();
+		if ((side_a != side_c) || (side_b != side_d)) {
+			throw std::runtime_error("Стороны не равны попарно!");
+		}
+		if ((corner_A = corner_B = corner_C = corner_D) != 90) {
+			throw std::runtime_error("Не все углы равны 90!");
 		}
 	}
 };
@@ -237,19 +242,17 @@ public:
 		this->corner_B = B;
 		this->corner_C = C;
 		this->corner_D = D;
-
-		void check() override {
-			Quadrangle::check();
-			if (side_a != side_b != side_c != side_d) {
-				throw std::runtime_error("Не все стороны равны!");
-			}
-			if ((corner_A = corner_B = corner_C = corner_D) != 90) {
-				throw std::runtime_error("Не все углы равны 90!");
-			}
-		}
 	}
 
-
+	void check() override {
+		Quadrangle::check();
+		if (side_a != side_b != side_c != side_d) {
+			throw std::runtime_error("Не все стороны равны!");
+		}
+		if ((corner_A = corner_B = corner_C = corner_D) != 90) {
+			throw std::runtime_error("Не все углы равны 90!");
+		}
+	}
 };
 
 class Parallelogram : public Quadrangle // класс Параллелограмм
