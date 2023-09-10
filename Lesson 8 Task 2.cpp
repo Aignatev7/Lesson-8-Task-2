@@ -48,6 +48,7 @@ public:
 		this->corner_A = A;
 		this->corner_B = B;
 		this->corner_C = C;
+		check();
 	}
 
 	void check() override {
@@ -87,6 +88,7 @@ public:
 		this->corner_A = A;
 		this->corner_B = B;
 		this->corner_C = С;
+		check();
 	}
 
 	void check() override {
@@ -108,6 +110,7 @@ public:
 		this->corner_A = A;
 		this->corner_C = C;
 		this->corner_B = B;
+		check();
 	}
 
 	void check() override {
@@ -132,11 +135,12 @@ public:
 		this->corner_A = A;
 		this->corner_B = B;
 		this->corner_C = C;
+		check();
 	}
 
 	void check() override {
 		Triangle::check();
-		if (side_a != side_b != side_c) {
+		if ((side_a != side_b) && (side_b != side_c)) {
 			throw std::runtime_error("Не все стороны равны!");
 		}
 		if ((corner_A = corner_B = corner_C) != 60) {
@@ -171,6 +175,7 @@ public:
 		this->corner_B = B;
 		this->corner_C = C;
 		this->corner_D = D;
+		check();
 	}
 
 	int get_number_of_sides() { return number_of_sides; }
@@ -216,6 +221,7 @@ public:
 		this->corner_B = B;
 		this->corner_C = C;
 		this->corner_D = D;
+		check();
 	}
 
 	void check() override {
@@ -242,11 +248,12 @@ public:
 		this->corner_B = B;
 		this->corner_C = C;
 		this->corner_D = D;
+		check();
 	}
 
 	void check() override {
 		Quadrangle::check();
-		if (side_a != side_b != side_c != side_d) {
+		if ((side_a != side_b) && (side_b != side_c) && (side_c != side_d)) {
 			throw std::runtime_error("Не все стороны равны!");
 		}
 		if ((corner_A = corner_B = corner_C = corner_D) != 90) {
@@ -268,6 +275,7 @@ public:
 		this->corner_B = B;
 		this->corner_C = C;
 		this->corner_D = D;
+		check();
 	}
 
 	void check() override {
@@ -275,7 +283,7 @@ public:
 		if ((side_a != side_c) || (side_b != side_d)) {
 			throw std::runtime_error("Стороны не равны попарно!");
 		}
-		if ((corner_A == corner_C) || (corner_B == corner_D)) {
+		if ((corner_A != corner_C) || (corner_B != corner_D)) {
 			throw std::runtime_error("Углы попарно не равны!");
 		}
 	}
@@ -294,14 +302,15 @@ public:
 		this->corner_B = B;
 		this->corner_C = C;
 		this->corner_D = D;
+		check();
 	}
 
 	void check() override {
 		Quadrangle::check();
-		if (side_a != side_b != side_c != side_d) {
+		if ((side_a != side_b) && (side_b != side_c) && (side_c != side_d)) {
 			throw std::runtime_error("Не все стороны равны!");
 		}
-		if ((corner_A == corner_C) || (corner_B == corner_D)) {
+		if ((corner_A != corner_C) || (corner_B != corner_D)) {
 			throw std::runtime_error("Углы попарно не равны!");
 		}
 	}
@@ -321,32 +330,31 @@ int main() {
 		RightTriangle rig_tri(22, 32, 55, 45, 45, 90); // объект класса Прямоугольный треугольник
 		print_info(&rig_tri);
 
-		IsoscelesTriangle isos_tri(32, 44, 52, 62, 43, 68); // объект класса Равнобедренный треугольник
+		IsoscelesTriangle isos_tri(32, 44, 32, 55, 70, 55); // объект класса Равнобедренный треугольник
 		print_info(&isos_tri);
 
-		EquilateralTriangle eq_tri(32, 44, 52, 62, 43, 68); // объект класса Равносторонний треугольник
+		EquilateralTriangle eq_tri(70, 70, 70, 60, 60, 60); // объект класса Равносторонний треугольник
 		print_info(&eq_tri);
 
 		Quadrangle quad(12, 45, 89, 23, 65, 115, 110, 70); // объект класса Четырёхугольник 
 		print_info(&quad);
 
-		Rectangle rect(23, 57, 79, 45, 90, 90, 90, 90); // объект класса Прямоугольник
+		Rectangle rect(45, 57, 45, 57, 90, 90, 90, 90); // объект класса Прямоугольник
 		print_info(&rect);
 
-		Square square(45, 18, 76, 35, 65, 85, 45, 75); // объект класса Квадрат
+		Square square(45, 45, 45, 45, 90, 90, 90, 90); // объект класса Квадрат
 		print_info(&square);
 
-		Parallelogram paral(85, 52, 64, 38, 45, 15, 84, 31); // объект класса Параллелограмм
+		Parallelogram paral(85, 52, 85, 52, 100, 80, 100, 80); // объект класса Параллелограмм
 		print_info(&paral);
 
-		Rhomb rhomb(15, 30, 60, 85, 36, 125, 77, 95); // объект класса Ромб
+		Rhomb rhomb(50, 50, 50, 50, 120, 60, 120, 61); // объект класса Ромб
 		print_info(&rhomb);
 
 	}
-	catch (
-		std::exception ex) //ловим все исключения - наследники от std::exception
+	catch (std::exception ex) //ловим все исключения - наследники от std::exception
 	{
-		std::cout << "Ошибка создания фигуры. Причина: " << ex.what();
+		std::cout << "Ошибка создания фигуры. Причина: " << ex.what() << std::endl;
 	}
 }
 
